@@ -1,0 +1,53 @@
+﻿#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background: #F2F2F2;
+}
+
+tr:nth-child(odd) {
+    background: #FFF;
+}
+
+th, td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@keyframes logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.logo{
+    width: 50%;
+    height: 50%;
+    animation: logo-spin 20s linear infinite;
+}
+
+table {
+    background-color: black !important;
+    color: white !important;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    table th, table td {
+        background-color: gray;
+        color: white;
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
+
+    table th {
+        background-color: #333;
+    }
