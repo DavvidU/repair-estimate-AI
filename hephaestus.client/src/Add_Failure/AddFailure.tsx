@@ -38,7 +38,8 @@ const AddFailure: React.FC = () => {
   };
 
     const handleRecalculateClick = () => {
-      console.log('Selected model:', model);
+      //Wywo³anie enpointa, przekazuj¹c zmienn¹ model i failureData.type
+      //Zapisanie przeliczonej ceny w predictedPrice
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -98,7 +99,7 @@ const AddFailure: React.FC = () => {
       <h2>Failure Form</h2>
       <form onSubmit={handleSubmit}>
       <label>
-          Failure Type:
+          Failure Type: 
           <select
             name="failureType"
             value={failureData.failureType}
