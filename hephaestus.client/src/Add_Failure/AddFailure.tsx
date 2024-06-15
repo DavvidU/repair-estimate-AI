@@ -23,10 +23,22 @@ const AddFailure: React.FC = () => {
     status: '0',
     repairDescription: ''
   });
+  const [model, setModel] = useState(1);
+  const [predictedPrice, setPredictedPrice] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFailureData({ ...failureData, [name]: value });
+  };
+
+  const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const newModel = parseInt(e.target.value, 10);
+      setModel(newModel);
+      handleRecalculateClick();
+  };
+
+    const handleRecalculateClick = () => {
+      console.log('Selected model:', model);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -122,6 +134,24 @@ const AddFailure: React.FC = () => {
             required
           />
         </label>
+        <br />
+        <label>
+          Model:
+          <select
+            name="model"
+            value={model}
+            onChange={handleModelChange}
+            required
+          >
+            <option value="1">Model1</option>
+            <option value="2">Model2</option>
+            <option value="3">Model3</option>
+            <option value="4">Model4</option>
+            <option value="5">Model5</option>
+          </select>
+        </label>
+              <br />
+              <label>Predicted Price: {predictedPrice ? predictedPrice : '0'} </label><button type="button" onClick={handleRecalculateClick}>Recalculate</button>
         <br />
         <label>
           Potential Price:

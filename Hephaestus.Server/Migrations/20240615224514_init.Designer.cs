@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hephaestus.Server.Migrations
 {
     [DbContext(typeof(HephaestusDbContext))]
-    [Migration("20240403220615_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240615224514_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
