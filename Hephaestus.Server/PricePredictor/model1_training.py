@@ -40,9 +40,8 @@ X = scaler.fit_transform(X)
 # Podział danych na zestawy treningowy i testowy
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# ----- Sprawdzenie rozkładu danych -----
-print("Train set distribution:\n", y_train.value_counts())
-print("Test set distribution:\n", y_test.value_counts())
+# ----- Sprawdzenie danych ---------------
+print(data.head())
 
 # ----- Definiowanie i trenowanie modeli -----
 
@@ -70,9 +69,6 @@ model.fit(X_train, y_train, epochs=100, batch_size=32, verbose=0) # trening, min
 y_pred = model.predict(X_test)
 y_pred = y_pred.round().astype(int).flatten()
 
-# Sprawdzenie predykcji modelu
-print("Predictions:\n", pd.Series(y_pred).value_counts())
-
 # Ocena modelu
 
 accuracy = accuracy_score(y_test, y_pred)
@@ -86,6 +82,7 @@ f1_weighted = f1_score(y_test, y_pred, average='weighted', zero_division=1)
 
 # Logowanie modelu i metryk w MLFlow
 
+#signature = mlflow.models.signature.infer_signature(X_train, model.predict(X_train))
 with mlflow.start_run():
     mlflow.tensorflow.log_model(model, "model1")
     mlflow.log_metric("accuracy", accuracy)
