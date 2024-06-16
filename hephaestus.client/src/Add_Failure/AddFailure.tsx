@@ -34,11 +34,12 @@ const AddFailure: React.FC = () => {
   const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const newModel = parseInt(e.target.value, 10);
       setModel(newModel);
+      //Wywo³anie endpointa, przekazuj¹c zmienn¹ newModel
       handleRecalculateClick();
   };
 
     const handleRecalculateClick = () => {
-      //Wywo³anie enpointa, przekazuj¹c zmienn¹ model i failureData.type
+      //Wywo³anie enpointa, przekazuj¹c zmienn¹ failureData.type
       //Zapisanie przeliczonej ceny w predictedPrice
   };
 
