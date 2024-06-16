@@ -34,14 +34,48 @@ const AddFailure: React.FC = () => {
   const handleModelChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       const newModel = parseInt(e.target.value, 10);
       setModel(newModel);
-      //Wywo³anie endpointa, przekazuj¹c zmienn¹ newModel
-      handleRecalculateClick();
-  };
+    };
 
-    const handleRecalculateClick = () => {
-      //Wywo³anie enpointa, przekazuj¹c zmienn¹ failureData.type
-      //Zapisanie przeliczonej ceny w predictedPrice
-  };
+    const calculateDaysBetween = (startDate: string, endDate: string): number => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const diffTime = Math.abs(end.getTime() - start.getTime());
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays;
+    };
+
+    const handleRecalculateClick = async () => {
+        const portMap: { [key: number]: number } = {
+            1: 5002,
+            2: 5004,
+            3: 5006,
+            4: 5008,
+            5: 5010,
+        };
+        const selectedPort = portMap[model];
+        const url = `http://localhost:${selectedPort}/model`;
+
+        const daysBetween = calculateDaysBetween(failureData.date, failureData.potentialDate);
+
+        try {
+            const response = await axios.post(url, {
+                dataframe_split: {
+                    columns: ["FAILURE_TYPE", "DAYS_BETWEEN"],
+                    data: [[parseFloat(failureData.failureType), daysBetween]]
+                }
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const predictedPrice = response.data.predictions[0];
+            setPredictedPrice(predictedPrice.toString());
+        } catch (error) {
+            console.error('Error during prediction:', error);
+            setPredictedPrice('Error calculating price');
+        }
+    };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
