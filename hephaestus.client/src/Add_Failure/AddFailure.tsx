@@ -36,40 +36,31 @@ const AddFailure: React.FC = () => {
       setModel(newModel);
     };
 
-    const calculateDaysBetween = (startDate: string, endDate: string): number => {
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-        const diffTime = Math.abs(end.getTime() - start.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays;
-    };
-
     const handleRecalculateClick = async () => {
-        const portMap: { [key: number]: number } = {
-            1: 5002,
-            2: 5004,
-            3: 5006,
-            4: 5008,
-            5: 5010,
+        const endpointMap: { [key: number]: string } = {
+            1: '/model1-prediction',
+            2: '/model2-prediction',
+            3: '/model3-prediction',
+            4: '/model4-prediction',
+            5: '/model5-prediction',
         };
-        const selectedPort = portMap[model];
-        const url = `http://localhost:${selectedPort}/model`;
-
-        const daysBetween = calculateDaysBetween(failureData.date, failureData.potentialDate);
+        const selectedEndpoint = endpointMap[model];
+        const url = `http://localhost:5012${selectedEndpoint}`;
 
         try {
             const response = await axios.post(url, {
                 dataframe_split: {
-                    columns: ["FAILURE_TYPE", "DAYS_BETWEEN"],
-                    data: [[parseFloat(failureData.failureType), daysBetween]]
+                    columns: ["FAILURE_TYPE", "DATE", "POTENTIAL_DATE"],
+                    data: [[parseFloat(failureData.failureType), failureData.date, failureData.potentialDate]]
                 }
             }, {
                 headers: {
+
                     'Content-Type': 'application/json'
                 }
             });
-
-            const predictedPrice = response.data.predictions[0];
+            console.log(response);
+            const predictedPrice = Math.round(response.data.predicted_price);
             setPredictedPrice(predictedPrice.toString());
         } catch (error) {
             console.error('Error during prediction:', error);
