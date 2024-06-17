@@ -1,20 +1,23 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pandas as pd
 import subprocess
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 def run_model_script(model_name, data):
     script_path = f"./PricePredictor/{model_name}_prediction.py"
-    input_data = json.dumbs(data)
+    input_data = json.dumps(data)
     result = subprocess.run(['python', script_path, input_data], capture_output=True, text=True)
     output = json.loads(result.stdout)
     return output
 
 @app.route('/model1-prediction', methods=['POST'])
 def model1_prediction():
-    data = request.json['dataframe-split']
+    data = request.json['dataframe_split']
+    print(data)
     response = run_model_script('model1', data)
     return jsonify(response)
 
