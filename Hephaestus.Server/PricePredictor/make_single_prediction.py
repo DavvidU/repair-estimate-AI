@@ -22,7 +22,7 @@ example_data['DAYS_BETWEEN'] = (example_data['POTENTIAL_DATE'] - example_data['D
 
 # Label Encoding dla kolumny FAILURE_TYPE (używając tych samych etykiet jak w treningu)
 label_encoder = LabelEncoder()
-label_encoder.fit(['Low', 'Mild', 'Medium', 'High'])
+label_encoder.fit(['Low', 'Mild', 'High', 'Critical'])
 example_data['FAILURE_TYPE'] = label_encoder.transform(example_data['FAILURE_TYPE'])
 
 # Usuwanie oryginalnych kolumn DATE i POTENTIAL_DATE

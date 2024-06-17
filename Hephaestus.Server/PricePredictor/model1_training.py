@@ -24,7 +24,8 @@ data['DAYS_BETWEEN'] = (data['POTENTIAL_DATE'] - data['DATE']).dt.days
 
 # Label Encoding dla kolumny FAILURE_TYPE
 label_encoder = LabelEncoder()
-data['FAILURE_TYPE'] = label_encoder.fit_transform(data['FAILURE_TYPE'])
+label_encoder.fit(['Low', 'Mild', 'High', 'Critical'])
+data['FAILURE_TYPE'] = label_encoder.transform(data['FAILURE_TYPE'])
 
 # Usuwanie oryginalnych kolumn DATE i POTENTIAL_DATE
 data = data.drop(columns=['DATE', 'POTENTIAL_DATE'])
