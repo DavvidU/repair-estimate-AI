@@ -8,9 +8,9 @@ import tensorflow as tf
 
 # Przykładowa awaria
 example_data = pd.DataFrame({
-    'FAILURE_TYPE': ['High'],
-    'DATE': ['2024-04-18'],
-    'POTENTIAL_DATE': ['2025-02-11']
+    'FAILURE_TYPE': ['Low'],
+    'DATE': ['2024-02-02'],
+    'POTENTIAL_DATE': ['2027-02-11']
 })
 
 # Konwersja kolumny DATE i POTENTIAL_DATE na obiekty datetime
@@ -36,7 +36,7 @@ example_data_scaled = scaler.fit_transform(example_data)
 
 mlflow.set_tracking_uri(uri="http://127.0.0.1:5000")
 
-model_uri = 'runs:/9622ccab7dae41a2bf559d5d849b9913/model1'
+model_uri = 'runs:/361edb364e874634a9a0608a2318952a/model1'
 loaded_model = mlflow.pyfunc.load_model(model_uri)
 
 predicted_price = loaded_model.predict(example_data_scaled)
