@@ -42,7 +42,7 @@ example_data_scaled = scaler.fit_transform(example_data)
 
 mlflow.set_tracking_uri(uri="http://127.0.0.1:5000")
 
-model_uri = 'runs:/e9173ab8beef4a5080796726f3dd6fd3/model1'
+model_uri = 'runs:/85434afdf25e4698811e81cc4fb622f2/model1'
 loaded_model = mlflow.pyfunc.load_model(model_uri)
 
 predicted_price = loaded_model.predict(example_data_scaled)

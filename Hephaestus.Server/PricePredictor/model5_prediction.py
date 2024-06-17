@@ -5,6 +5,13 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 import tensorflow as tf
+import logging
+import os
+
+# Wyciszanie TensorFlow
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+tf.get_logger().setLevel(logging.ERROR)
+tf.autograph.set_verbosity(3)
 
 # ----- Przygotowanie danych -----
 
@@ -34,9 +41,9 @@ example_data_scaled = scaler.fit_transform(example_data)
 
 mlflow.set_tracking_uri(uri="http://127.0.0.1:5000")
 
-model_uri = 'runs:/9622ccab7dae41a2bf559d5d849b9913/model1'
+model_uri = 'runs:/346873263f4c4282867fe937a2760065/model5'
 loaded_model = mlflow.pyfunc.load_model(model_uri)
 
 predicted_price = loaded_model.predict(example_data_scaled)
-
-print(json.dumps({"predicted_price": predicted_price[0]}))
+cena = predicted_price.item()
+print(json.dumps({"predicted_price": cena}))
