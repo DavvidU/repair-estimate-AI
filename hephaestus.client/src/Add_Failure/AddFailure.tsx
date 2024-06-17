@@ -55,11 +55,12 @@ const AddFailure: React.FC = () => {
                 }
             }, {
                 headers: {
+
                     'Content-Type': 'application/json'
                 }
             });
-
-            const predictedPrice = response.data.predictions[0];
+            console.log(response);
+            const predictedPrice = Math.round(response.data.predicted_price);
             setPredictedPrice(predictedPrice.toString());
         } catch (error) {
             console.error('Error during prediction:', error);
