@@ -48,9 +48,8 @@ print(data.head())
 
 def create_model():
     model = Sequential([
-        Dense(6, activation='relu'),
-        Dense(3, activation='relu'),
-        Dense(1, activation='linear'),
+        Dense(512, activation='relu'),
+        Dense(1, activation='linear')
     ])
     model.compile(optimizer='adam', loss='mean_squared_error', metrics=['mae'])
     return model
@@ -59,7 +58,7 @@ mlflow.set_tracking_uri(uri="http://127.0.0.1:5000")
 mlflow.set_experiment("Failure repair costs predictions")
 
 model = create_model()
-model.fit(X_train, y_train, epochs=10, batch_size=1, verbose=0) # trening, mini-batch gradient descent
+model.fit(X_train, y_train, epochs=150, batch_size=32, verbose=0) # trening, mini-batch gradient descent
 
 # Dokonywanie predykcji
 
@@ -81,7 +80,7 @@ f1_weighted = f1_score(y_test, y_pred, average='weighted', zero_division=1)
 
 #signature = mlflow.models.signature.infer_signature(X_train, model.predict(X_train))
 with mlflow.start_run():
-    mlflow.tensorflow.log_model(model, "model3")
+    mlflow.tensorflow.log_model(model, "model4")
     mlflow.log_metric("accuracy", accuracy)
     mlflow.log_metric("precision_macro", precision_macro)
     mlflow.log_metric("precision_micro", precision_micro)

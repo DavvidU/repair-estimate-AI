@@ -88,7 +88,7 @@ f1_weighted = f1_score(y_test, y_pred, average='weighted', zero_division=1)
 
 #signature = mlflow.models.signature.infer_signature(X_train, model.predict(X_train))
 with mlflow.start_run():
-    mlflow.tensorflow.log_model(model, "model1")
+    mlflow.tensorflow.log_model(model, "model2")
     mlflow.log_metric("accuracy", accuracy)
     mlflow.log_metric("precision_macro", precision_macro)
     mlflow.log_metric("precision_micro", precision_micro)
